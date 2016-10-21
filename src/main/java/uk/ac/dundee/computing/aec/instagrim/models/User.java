@@ -27,7 +27,7 @@ public class User {
         
     }
     
-    public boolean RegisterUser(String username, String Password){
+    public boolean RegisterUser(String username, String Password, String fname, String lname, String email){
         AeSimpleSHA1 sha1handler=  new AeSimpleSHA1();
         String EncodedPassword=null;
         try {
@@ -37,12 +37,12 @@ public class User {
             return false;
         }
         Session session = cluster.connect("instagrim");
-        PreparedStatement ps = session.prepare("insert into userprofiles (login,password) Values(?,?)");
+        PreparedStatement ps = session.prepare("insert into userprofiles (login,password, first_name, last_name, email) Values(?,?,?,?,?)");
        
         BoundStatement boundStatement = new BoundStatement(ps);
         session.execute( // this is where the query is executed
                 boundStatement.bind( // here you are binding the 'boundStatement'
-                        username,EncodedPassword));
+                        username,EncodedPassword, fname, lname, email));
         //We are assuming this always works.  Also a transaction would be good here !
         
         return true;
@@ -75,10 +75,26 @@ public class User {
                     return true;
             }
         }
-   
-    
     return false;  
     }
+    
+    public boolean IsUsernameTaken(String username){
+        AeSimpleSHA1 sha1handler=  new AeSimpleSHA1();
+        Session session = cluster.connect("instagrim");
+        PreparedStatement ps = session.prepare("SELECT * FROM userprofiles WHERE login =?");
+        ResultSet rs = null;
+        BoundStatement boundStatement = new BoundStatement(ps);
+        rs = session.execute( // this is where the query is executed
+                boundStatement.bind( // here you are binding the 'boundStatement'
+                        username));
+        if (rs.isExhausted()) {
+            System.out.println("No Images returned");
+            return false;
+        } else {
+            return true;  
+        }
+    }
+    
        public void setCluster(Cluster cluster) {
         this.cluster = cluster;
     }

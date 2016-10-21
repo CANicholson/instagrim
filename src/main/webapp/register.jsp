@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="uk.ac.dundee.computing.aec.instagrim.stores.*" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -27,12 +28,20 @@
         <article>
             <h3>Register as user</h3>
             <form method="POST"  action="Register">
+                <%
+                    Registering nr = (Registering) session.getAttribute("Registering");
+                    if (nr != null){%>
+                    <h4>Username already in use</h4>
+                <%}%>
                 <ul>
-                    <li>User Name <input type="text" name="username"></li>
-                    <li>Password <input type="password" name="password"></li>
+                    <li>User Name <input pattern=".{4,}" required title ="Username must be minimum 4 characters long" type="text" name="username"></li>
+                    <li>Password <input pattern=".{8,}" required title="Password must be minimum 8 characters long" type="password" name="password"></li>
+                    <li>First Name <input type="text" name="fname"></li>
+                    <li>Last Name <input type="text" name="lname"></li>
+                    <li>Email <input  type="email" name="email"></li>
                 </ul>
                 <br/>
-                <input type="submit" value="Regidter"> 
+                <input type="submit" value="Register"> 
             </form>
 
         </article>

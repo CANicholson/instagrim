@@ -18,7 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
 import uk.ac.dundee.computing.aec.instagrim.models.User;
-
+import uk.ac.dundee.computing.aec.instagrim.stores.Registering;
+        
 /**
  *
  * @author Administrator
@@ -47,13 +48,28 @@ public class Register extends HttpServlet {
             throws ServletException, IOException {
         String username=request.getParameter("username");
         String password=request.getParameter("password");
+        String fname=request.getParameter("fname");
+        String lname=request.getParameter("lname");
+        String email=request.getParameter("email");
         
         User us=new User();
         us.setCluster(cluster);
-        us.RegisterUser(username, password);
-        
-	response.sendRedirect("/Instagrim");
-        
+        boolean isValid=us.IsUsernameTaken(username);
+        if(isValid){
+            Registering nr = new Registering();
+            nr.setRegistered();
+            request.getSession().setAttribute("Registering", nr);
+            response.sendRedirect("/Instagrim/Register");
+        }else{
+            us.RegisterUser(username, password, fname, lname, email);
+            response.sendRedirect("/Instagrim/Login");
+        }
+    }
+    
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        RequestDispatcher rd=request.getRequestDispatcher("register.jsp");
+        rd.forward(request,response);
     }
 
     /**
