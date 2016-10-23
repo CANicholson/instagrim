@@ -21,8 +21,6 @@
         </header>
         <nav>
             <ul>
-
-               
                 <li><a href="/Instagrim/Upload">Upload</a></li>
                     <%
                         
@@ -32,19 +30,17 @@
                             if (lg.getLoggedin()) {
                     %>
 
+                <li><a href="/Instagrim/">Your Images</a></li>
                 <li><a href="/Instagrim/Images/<%=lg.getUsername()%>">Your Images</a></li>
-                <form method="POST"  action="Logout">
+                <li><form method="POST"  action="Logout">
                     <input type="submit" value="Logout">
-                </form>
+                </form></li>
                     <%}
                             }else{
                                 %>
                  <li><a href="/Instagrim/Register">Register</a></li>
                 <li><a href="/Instagrim/Login">Login</a></li>
-                <%
-                                        
-                            
-                    }%>
+                <%}%>
             </ul>
         </nav>
         <footer>

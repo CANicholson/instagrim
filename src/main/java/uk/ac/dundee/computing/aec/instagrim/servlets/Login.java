@@ -58,8 +58,12 @@ public class Login extends HttpServlet {
         System.out.println("Session in servlet "+session);
         if (isValid){
             LoggedIn lg= new LoggedIn();
+            String[] data = us.ReturnDetails(username);
             lg.setLoggedin();
             lg.setUsername(username);
+            lg.setFname(data[0]);
+            lg.setLname(data[1]);
+            lg.setEmail(data[2]);
             //request.setAttribute("LoggedIn", lg);
             
             session.setAttribute("LoggedIn", lg);

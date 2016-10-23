@@ -24,9 +24,16 @@
         <nav>
             <ul>
                 <li class="nav"><a href="/Instagrim/Upload">Upload</a></li>
-                <li class="nav"><a href="/Instagrim/Images/majed">Sample Images</a></li>
+                <%
+                        LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
+                    %>
+                <li><a href="/Instagrim/Images/<%=lg.getUsername()%>">Your Images</a></li>        
+                <li><form method="POST"  action="Logout">
+                    <input type="submit" value="Logout">
+                </form></li>
             </ul>
         </nav>
+        
  
         <article>
             <h1>Your Pics</h1>

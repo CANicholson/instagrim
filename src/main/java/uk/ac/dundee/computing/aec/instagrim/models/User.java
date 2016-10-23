@@ -14,6 +14,7 @@ import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.util.*;
 import uk.ac.dundee.computing.aec.instagrim.lib.AeSimpleSHA1;
 import uk.ac.dundee.computing.aec.instagrim.stores.Pic;
 
@@ -95,7 +96,24 @@ public class User {
         }
     }
     
-       public void setCluster(Cluster cluster) {
+    public String[] ReturnDetails(String username){
+        AeSimpleSHA1 sha1handler=  new AeSimpleSHA1();
+        Session session = cluster.connect("instagrim");
+        PreparedStatement ps = session.prepare("SELECT first_name, last_name, email FROM userprofiles WHERE login =?");
+        ResultSet rs = null;
+        String[] Data = new String[3];
+                BoundStatement boundStatement = new BoundStatement(ps);
+        rs = session.execute(boundStatement.bind(username));
+        for (Row row : rs){    
+        Data[0] = row.getString("first_name");
+        Data[1] = row.getString("last_name");
+        Data[2] = row.getString("email");
+        }
+        return Data; 
+     }
+    
+    
+    public void setCluster(Cluster cluster) {
         this.cluster = cluster;
     }
 

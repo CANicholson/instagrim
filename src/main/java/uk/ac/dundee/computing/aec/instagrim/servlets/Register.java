@@ -55,12 +55,13 @@ public class Register extends HttpServlet {
         User us=new User();
         us.setCluster(cluster);
         boolean isValid=us.IsUsernameTaken(username);
+        Registering nr = new Registering();
         if(isValid){
-            Registering nr = new Registering();
             nr.setRegistered();
             request.getSession().setAttribute("Registering", nr);
             response.sendRedirect("/Instagrim/Register");
         }else{
+            nr.setUnregistered();
             us.RegisterUser(username, password, fname, lname, email);
             response.sendRedirect("/Instagrim/Login");
         }
