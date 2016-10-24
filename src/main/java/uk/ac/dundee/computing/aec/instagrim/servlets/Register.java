@@ -48,12 +48,11 @@ public class Register extends HttpServlet {
             throws ServletException, IOException {
         String username=request.getParameter("username");
         String password=request.getParameter("password");
-        String cpassword=request.getParameter("cpassword");
         String fname=request.getParameter("fname");
         String lname=request.getParameter("lname");
         String email=request.getParameter("email");
-        String cemail=request.getParameter("cemail");
-        
+        String color=request.getParameter("color");
+
         User us=new User();
         us.setCluster(cluster);
         boolean isValid=us.IsUsernameTaken(username);
@@ -62,17 +61,9 @@ public class Register extends HttpServlet {
             nr.setRegistered();
             request.getSession().setAttribute("Registering", nr);
             response.sendRedirect("/Instagrim/Register");
-        }else if(password == null ? cpassword != null : !password.equals(cpassword)){
-            nr.nonmatchingPassword();
-            request.getSession().setAttribute("Registering", nr);
-            response.sendRedirect("/Instagrim/Register");
-        }else if(email == null ? cemail != null : !email.equals(cemail)){
-            nr.nonmatchingEmail();
-            request.getSession().setAttribute("Registering", nr);
-            response.sendRedirect("/Instagrim/Register");
         }else{
             nr.setUnregistered();
-            us.RegisterUser(username, password, fname, lname, email);
+            us.RegisterUser(username, password, fname, lname, email, color);
             response.sendRedirect("/Instagrim/Login");
         }
     }

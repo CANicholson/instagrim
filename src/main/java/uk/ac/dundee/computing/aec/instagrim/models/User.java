@@ -28,7 +28,7 @@ public class User {
         
     }
     
-    public boolean RegisterUser(String username, String Password, String fname, String lname, String email){
+    public boolean RegisterUser(String username, String Password, String fname, String lname, String email, String color){
         AeSimpleSHA1 sha1handler=  new AeSimpleSHA1();
         String EncodedPassword=null;
         try {
@@ -38,12 +38,12 @@ public class User {
             return false;
         }
         Session session = cluster.connect("instagrim");
-        PreparedStatement ps = session.prepare("insert into userprofiles (login,password, first_name, last_name, email) Values(?,?,?,?,?)");
+        PreparedStatement ps = session.prepare("insert into userprofiles (login,password, first_name, last_name, email, color) Values(?,?,?,?,?,?)");
        
         BoundStatement boundStatement = new BoundStatement(ps);
         session.execute( // this is where the query is executed
                 boundStatement.bind( // here you are binding the 'boundStatement'
-                        username,EncodedPassword, fname, lname, email));
+                        username,EncodedPassword, fname, lname, email, color));
         //We are assuming this always works.  Also a transaction would be good here !
         
         return true;
@@ -99,15 +99,16 @@ public class User {
     public String[] ReturnDetails(String username){
         AeSimpleSHA1 sha1handler=  new AeSimpleSHA1();
         Session session = cluster.connect("instagrim");
-        PreparedStatement ps = session.prepare("SELECT first_name, last_name, email FROM userprofiles WHERE login =?");
+        PreparedStatement ps = session.prepare("SELECT first_name, last_name, email, color FROM userprofiles WHERE login =?");
         ResultSet rs = null;
-        String[] Data = new String[3];
+        String[] Data = new String[4];
                 BoundStatement boundStatement = new BoundStatement(ps);
         rs = session.execute(boundStatement.bind(username));
         for (Row row : rs){    
         Data[0] = row.getString("first_name");
         Data[1] = row.getString("last_name");
         Data[2] = row.getString("email");
+        Data[3] = row.getString("color");
         }
         return Data; 
      }

@@ -16,7 +16,7 @@
     <body>
         <header>
         <h1>InstaGrim ! </h1>
-        <h2>Your world in Black and White</h2>
+        <h2>Your world in Black and white</h2>
         </header>
        <nav>
             <ul>
@@ -30,21 +30,19 @@
                     Registering nr = (Registering) session.getAttribute("Registering");
                     if (nr != null){%>
                     <h4>Username already in use</h4>
-                    <%} if(nr.getPassword()){%>
-                    <h4>Passwords do not match</h4>
-                    <%}else if(nr.getEmail()){%>
-                    <h4>Emails do not match</h4>
                 <%}%>
                 <ul>
-                    <li>User Name <input pattern=".{4,}" required title ="Username must be minimum 4 characters long" type="text" name="username"></li>
-                    <li>Password <input pattern=".{8,}" required title="Password must be minimum 8 characters long" type="password" name="password"></li>
-                    <li>Confirm Password <input pattern=".{8,}" required title="Password must be minimum 8 characters long" type="password" name="cpassword"></li>
-                    <li>First Name <input type="text" name="fname"></li>
-                    <li>Last Name <input type="text" name="lname"></li>
-                    <li>Email <input  type="email" name="email"></li>
-                    <li>Confirm Email <input  type="email" name="cemail"></li>
+                <li>User Name <input pattern=".{4,}" required title ="Username must be minimum 4 characters long" type="text" name="username"></li>
+                <li>Password <input pattern=".{8,}" required title="Password must be minimum 8 characters long" type="password" name="password"></li>
+                <li>First Name <input type="text" name="fname"></li>
+                <li>Last Name <input type="text" name="lname"></li>
+                <li>Email <input  type="email" name="email"></li>                 
+                Select color
+                <li><input type="radio" name="color" value="black" checked/> Black</li>
+                <li><input type="radio" name="color" value="red"/> Red</li>
+                <li><input type="radio" name="color" value="blue"/> Blue</li>
+                <li><input type="radio" name="color" value="green"/> Green</li>
                 </ul>
-                <br/>
                 <input type="submit" value="Register"> 
             </form>
 

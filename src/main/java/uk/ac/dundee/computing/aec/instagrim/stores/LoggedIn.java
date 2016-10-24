@@ -16,6 +16,7 @@ public class LoggedIn {
     String Fname=null;
     String Lname=null;
     String Email=null;
+    String Color=null;
     public void LoggedIn(){
         
     }
@@ -51,7 +52,15 @@ public class LoggedIn {
     public String getEmail(){
         return Email;
     }
-        
+    
+    public void setColor(String color){
+        this.Color=color;
+    }
+    
+    public String getColor(){
+        return Color;
+    }
+    
     public void setLoggedin(){
         loggedin=true;
     }
