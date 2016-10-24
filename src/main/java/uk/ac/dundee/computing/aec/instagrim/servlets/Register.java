@@ -48,9 +48,11 @@ public class Register extends HttpServlet {
             throws ServletException, IOException {
         String username=request.getParameter("username");
         String password=request.getParameter("password");
+        String cpassword=request.getParameter("cpassword");
         String fname=request.getParameter("fname");
         String lname=request.getParameter("lname");
         String email=request.getParameter("email");
+        String cemail=request.getParameter("cemail");
         
         User us=new User();
         us.setCluster(cluster);
@@ -58,6 +60,14 @@ public class Register extends HttpServlet {
         Registering nr = new Registering();
         if(isValid){
             nr.setRegistered();
+            request.getSession().setAttribute("Registering", nr);
+            response.sendRedirect("/Instagrim/Register");
+        }else if(password == null ? cpassword != null : !password.equals(cpassword)){
+            nr.nonmatchingPassword();
+            request.getSession().setAttribute("Registering", nr);
+            response.sendRedirect("/Instagrim/Register");
+        }else if(email == null ? cemail != null : !email.equals(cemail)){
+            nr.nonmatchingEmail();
             request.getSession().setAttribute("Registering", nr);
             response.sendRedirect("/Instagrim/Register");
         }else{

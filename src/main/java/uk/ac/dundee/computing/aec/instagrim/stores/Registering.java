@@ -12,6 +12,8 @@ package uk.ac.dundee.computing.aec.instagrim.stores;
  */
 public class Registering {
     boolean registered=false;
+    boolean password=false;
+    boolean email=false;
     public void Registered(){
         
     }
@@ -23,10 +25,34 @@ public class Registering {
         registered=false;
     }
     
+    public void nonmatchingPassword(){
+        password=true;
+    }
+    
+    public void nonmatchingEmail(){
+        email=true;
+    }
+    
     public void setRegisterState(boolean registered){
         this.registered=registered;
     }
     public boolean getRegister(){
         return registered;
+    }
+    
+    public void setPasswordState(boolean password){
+        this.password=password;
+    }
+    
+    public void setEmailState(boolean email){
+        this.email=email;
+    }
+    
+    public boolean getPassword(){
+        return password;
+    }
+    
+    public boolean getEmail(){
+        return email;
     }
 }
